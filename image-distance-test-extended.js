@@ -151,6 +151,75 @@ for (var i = 0; i < files.length; i++) {
                 var pearsonCorrelation = crossCorrPt1 / (std1 * std2 * width * height);
                     // (width * height) factor to compensate 1/N term in default stdDev calculation
 
+                /* Now normalize the image such that the bottom 5% percentile
+                of intensity is the new lowest value and the top 5% percentile
+                is the new maximum value in the picture */
+                // Get the pixel values as an array
+                var pixels  = processor1.getPixels();
+                var pixels2 = processor2.getPixels();
+
+                // Sort the pixel values to find percentiles
+                var sortedPixels = java.util.Arrays.copyOf(pixels, pixels.length);
+                var sortedPixels2 = java.util.Arrays.copyOf(pixels2, pixels2.length);
+                java.util.Arrays.sort(sortedPixels);
+                java.util.Arrays.sort(sortedPixels2);
+
+                // Calculate the 5th and 95th percentiles
+                var lowerPercentileIndex = Math.floor(0.05 * sortedPixels.length);
+                var upperPercentileIndex = Math.floor(0.95 * sortedPixels.length);
+                var lowerPercentileValue = sortedPixels[lowerPercentileIndex];
+                var upperPercentileValue = sortedPixels[upperPercentileIndex];
+                // For the 2nd image
+                var lowerPercentileIndex2 = Math.floor(0.05 * sortedPixels2.length);
+                var upperPercentileIndex2 = Math.floor(0.95 * sortedPixels2.length);
+                var lowerPercentileValue2 = sortedPixels2[lowerPercentileIndex2];
+                var upperPercentileValue2 = sortedPixels2[upperPercentileIndex2];
+
+                // Normalize the pixel values
+                // I think this could also be done with built-in functions, 
+                // but for now I'm keeping it this way, as it might be convenient
+                // when working with ROIs (although those also perhaps could be
+                // saved separately
+                for (var y = 0; y < height; y++) {
+                    for (var x = 0; x < width; x++) {
+                        var pixelValue  = processor1.getPixel(x, y);
+                        var pixelValue2 = processor2.getPixel(x, y);
+
+                        // Apply normalization
+                        var normalizedValue = (pixelValue - lowerPercentileValue) / (upperPercentileValue - lowerPercentileValue);
+                        normalizedValue = Math.max(0, Math.min(1, normalizedValue)); // Clamp between 0 and 1
+                        processor1.putPixelValue(x, y, normalizedValue * 255); // Scale back to 0-255 range
+                        // Apply normalization to 2nd image
+                        var normalizedValue2 = (pixelValue2 - lowerPercentileValue2) / (upperPercentileValue2 - lowerPercentileValue2);
+                        normalizedValue2 = Math.max(0, Math.min(1, normalizedValue2)); // Clamp between 0 and 1
+                        processor2.putPixelValue(x, y, normalizedValue2 * 255); // Scale back to 0-255 range
+                        
+                    }
+                }
+                // Convert image1 and image2 type to 8bit
+                IJ.run(image1, "8-bit", "");
+                IJ.run(image2, "8-bit", "");
+                                    
+                // Now save these normalized images to respective subfolders "processed"
+                // for inspection
+                var processedFolder1 = new java.io.File(folder1Path + "processed/");
+                var processedFolder2 = new java.io.File(folder2Path + "processed/");
+                if (!processedFolder1.exists()) {
+                    processedFolder1.mkdirs();
+                }
+                if (!processedFolder2.exists()) {
+                    processedFolder2.mkdirs();
+                }
+                // save the two normalized images to those folder
+                var normalizedImage1 = new java.io.File(processedFolder1, file.getName());
+                var normalizedImage2 = new java.io.File(processedFolder2, file2.getName());
+                IJ.save(image1, normalizedImage1.getAbsolutePath());
+                IJ.save(image2, normalizedImage2.getAbsolutePath());
+                
+                // Close the images
+                // image1.close();
+                // image2.close();
+                
                 // Add the result to the table
                 results.incrementCounter();
                 results.addValue("Image Name", file.getName());
