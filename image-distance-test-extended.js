@@ -13,6 +13,8 @@ MW 2025/05
 */
 
 // Test folders, e.g.:
+var default1 = "/Users/m.wehrens/Data_UVA/2025_05_Isabelle_p2a-localization/DATA/202505_testset-email/image_set_A/"
+var default2 = "/Users/m.wehrens/Data_UVA/2025_05_Isabelle_p2a-localization/DATA/202505_testset-email/image_set_B/"
 // /Users/m.wehrens/Data_UVA/2025_05_Isabelle_p2a-localization/DATA/202505_testset-email/image_set_A
 // /Users/m.wehrens/Data_UVA/2025_05_Isabelle_p2a-localization/DATA/202505_testset-email/image_set_B
 
@@ -33,7 +35,7 @@ importClass(Packages.ij.io.DirectoryChooser);
 var gd = new GenericDialog("Select Folders");
 
 // Add two path fields with respective browse buttons buttons
-gd.addStringField("Folder 1:", "", 40);
+gd.addStringField("Folder 1:", default1, 40);
 // Add buttons to select folders
 gd.addButton("Browse Folder 1", function() {
     var dirChooser1 = new DirectoryChooser("Select Folder 1");
@@ -43,7 +45,7 @@ gd.addButton("Browse Folder 1", function() {
     }
 });
 
-gd.addStringField("Folder 2:", "", 40);
+gd.addStringField("Folder 2:", default2, 40);
 gd.addButton("Browse Folder 2", function() {
     var dirChooser2 = new DirectoryChooser("Select Folder 2");
     var selectedFolder2 = dirChooser2.getDirectory();
@@ -117,7 +119,17 @@ for (var i = 0; i < files.length; i++) {
                 var processor1 = image1.getProcessor();
                 var processor2 = image2.getProcessor();
 
+                // Now calculate the mean value of both images
+                var stats1 = image1.getStatistics();
+                var meanIntensity1 = stats1.mean;
+                var stats2 = image2.getStatistics();
+                var meanIntensity2 = stats2.mean;                                    
+                // Also get the std
+                var std1 = stats1.stdDev;
+                var std2 = stats2.stdDev;
+                
                 var diffSum = 0;
+                var crossCorrPt1 =0;
 
                 // Loop through each pixel
                 for (var y = 0; y < height; y++) {
@@ -128,16 +140,22 @@ for (var i = 0; i < files.length; i++) {
                         // Calculate the absolute difference
                         var diff = Math.abs(pixel1 - pixel2);
                         diffSum += diff;
+                        // Calculate the pearson correlation part
+                        crossCorrPt1 += (pixel1 - meanIntensity1) * (pixel2 - meanIntensity2);
                     }
                 }
 
                 // Calculate the mean difference
                 var meanDifference = diffSum / (width * height);
+                // Calculate the Pearson correlation
+                var pearsonCorrelation = crossCorrPt1 / (std1 * std2 * width * height);
+                    // (width * height) factor to compensate 1/N term in default stdDev calculation
 
                 // Add the result to the table
                 results.incrementCounter();
                 results.addValue("Image Name", file.getName());
                 results.addValue("Mean Difference", meanDifference);
+                results.addValue("Pearson Corr", pearsonCorrelation);
             } else {
                 print("Image dimensions do not match for " + fileName1 + " and " + fileName2);
             }
