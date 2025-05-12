@@ -30,6 +30,8 @@ the user can use to respectively select two folders. */
 //Import classes
 importClass(Packages.ij.gui.GenericDialog);
 importClass(Packages.ij.io.DirectoryChooser);
+importClass(Packages.ij.plugin.frame.RoiManager);
+importClass(Packages.java.io.File);
 
 // Create a dialog box
 var gd = new GenericDialog("Select Folders");
@@ -74,6 +76,12 @@ var files = folder.listFiles();
 // Create a ResultsTable to store the results
 var results = new ResultsTable();
 
+// Create an ROI manager
+var roiManager = RoiManager.getInstance()
+if (roiManager == null) {
+    roiManager = new RoiManager();
+}
+
 // Loop through each file in the folder
 for (var i = 0; i < files.length; i++) {
     var file = files[i];
@@ -86,6 +94,20 @@ for (var i = 0; i < files.length; i++) {
             var file_identifier = fileName1.substring(0, underscoreIndex);
         }        
         print("File identifier: " + file_identifier);
+        
+        // Also open the ROI file
+        // Construct the ROI file path
+        var roiFilePath = file.getAbsolutePath().replace(".tif", "_roi.zip");
+
+        // Check if the ROI file exists
+        // Load the corresponding ROI file
+        var roiFile = new File(roiFilePath);
+        if (roiFile.exists()) {
+            roiManager.reset(); // Clear previous ROIs
+            roiManager.runCommand("Open", roiFilePath); // Load ROIs            
+        } else {
+            print("ROI file not found!!! -- " + roiFilePath);
+        }
         
         // Now identify the file in the 2nd folder that also starts with
         // that identifier and two underscores
@@ -100,9 +122,10 @@ for (var i = 0; i < files.length; i++) {
             }
         }
         fileName2 = file2.getName();
-        print("File 1: "+fileName1)
+        print("File 1: "+fileName1);
         print("File 2: "+fileName2);
-        
+        print("ROI file: " + roiFilePath);
+                
         // Open the two image
         var image1 = IJ.openImage(file.getAbsolutePath());
         var image2 = IJ.openImage(file2.getAbsolutePath());
