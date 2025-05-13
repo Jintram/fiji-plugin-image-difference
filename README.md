@@ -31,7 +31,7 @@ $$
 \mathrm{RMSD} = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (X_i - Y_i)^2}
 $$
 
-where $n$ is the total number of pixels. (Note that this is related to the [Euclidean distance](https://en.wikipedia.org/wiki/Euclidean_distance) between vectors $\vec{x}$ and $\vec{y}$, but an $1/N$ term was added.) 
+where $n$ is the total number of pixels. (Note that this is related to the [Euclidean distance](https://en.wikipedia.org/wiki/Euclidean_distance) between vectors $\vec{x}$ and $\vec{y}$, but an $1/n$ term was added.) 
 
 Moreover, $X$ and $Y$ now indicate respectively images $x$ and $y$ that are normalized as follows:
 
