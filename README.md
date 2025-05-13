@@ -137,5 +137,7 @@ Also, it doesn't display clearly that it is running. When it is done, it will sh
 
 Perhaps it is best to first test the script on a limited amount of images, such that you are sure it works before applying it to a large set of images.
 
+### Contact
 
+Contact me for further questions: m.wehrens@uva.nl.
 
