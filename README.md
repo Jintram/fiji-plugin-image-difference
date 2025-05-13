@@ -70,7 +70,14 @@ It is thus expected that the distance metrics reflect, respectively
 2. perfect similarity
 3. intermediate similarity
 
-This is indeed what is observed (each dot corresponds to an ROI):
+This can also be visualized by scatter plots:
+
+| Set 1 | Set 2 | Set 3 |
+| ----- | ----- | ----- |
+| Similar | Dissimilar| Intermediate |
+| <img src="images/img1a_img1b.png" width="200" /> | <img src="images/img2a_img2b.png" width="200" /> | <img src="images/img3a_img3b.png" width="200" /> | 
+
+This is indeed what is reflected by the metrics (each dot corresponds to an ROI):
 
 ![Test set plots](images/plots_testset.png)
 
