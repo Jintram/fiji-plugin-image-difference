@@ -48,9 +48,7 @@ X_i = (x_i - x_{0.01}) / (x_{0.99} - x_{0.01})
 $$
 
 with $x_{0.01}$ and $x_{0.99}$ the 1st and 99th percentiles of the pixel values in image $x$, respectively.
-
-
-To be able to compare across different image sets, the normalization is key.
+To be able to compare across different image sets, this normalization is key.
 
 A lower RMSD indicates higher similarity between the two images.
 
