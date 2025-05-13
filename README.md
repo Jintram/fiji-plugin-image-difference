@@ -74,7 +74,7 @@ This can also be visualized by scatter plots between pixels of the first image v
 
 | Set 1 | Set 2 | Set 3 |
 | ----- | ----- | ----- |
-| Similar | Dissimilar| Intermediate |
+| Dissimilar | Similar| Intermediate |
 | <img src="images/img1a_img1b.png" width="200" /> | <img src="images/img2a_img2b.png" width="200" /> | <img src="images/img3a_img3b.png" width="200" /> | 
 
 This is indeed what is reflected by the metrics (each dot corresponds to an ROI):
