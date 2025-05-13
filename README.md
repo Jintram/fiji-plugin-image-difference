@@ -43,11 +43,11 @@ where $n$ is the total number of pixels. (Note that this is related to the [Eucl
 
 Moreover, $X$ and $Y$ now indicate respectively images $x$ and $y$ that are normalized as follows:
 
-<!--
 $$
-X_i = (x_i - x_{1\%})/(x_{99\%} - x_{1\%})
+X_i = (x_i - x_{1\%}) / (x_{99\%} - x_{1\%})
 $$
 
+<!--
 with $x_{1\%}$ and $x_{99\%}$ the 1st and 99th percentiles of the pixel values in image $x$, respectively.
 -->
 
