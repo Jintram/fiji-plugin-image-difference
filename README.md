@@ -31,7 +31,7 @@ where $n$ is the total number of pixels and $\bar{x}$ and $\bar{y}$ are the mean
 
 A higher Pearson correlation coefficient indicates higher similarity between the two images.
 
-#### RMSE
+#### RMSD
 
 We also calculate the [RMSD](https://en.wikipedia.org/wiki/Root_mean_square_deviation) as follows:
 
