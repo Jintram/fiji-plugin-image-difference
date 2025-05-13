@@ -12,6 +12,9 @@ importClass(Packages.java.io.File);
 // Test folders, e.g.:
 var default1 = "/Users/m.wehrens/Data_UVA/2025_05_Isabelle_p2a-localization/DATA/202505_testset-email/image_set_A/"
 var default2 = "/Users/m.wehrens/Data_UVA/2025_05_Isabelle_p2a-localization/DATA/202505_testset-email/image_set_B/"
+// 2nd default set (test images):
+var default1 = '/Users/m.wehrens/Documents/git_repos/_UVA/2025_fiji-plugin-playground/test_data/set_a_with_ROIs/'
+var default2 = '/Users/m.wehrens/Documents/git_repos/_UVA/2025_fiji-plugin-playground/test_data/set_b_with_ROIs/'
 
 // Create a dialog box
 var gd = new GenericDialog("Select Folders");
@@ -47,6 +50,7 @@ if (roiManager == null) {
 }
 
 for (var i = 0; i < files.length; i++) {
+    print("======================================")
     var file = files[i];
     if (file.isFile() && file.getName().endsWith(".tif")) {
         var fileName1 = file.getName();
@@ -100,13 +104,14 @@ for (var i = 0; i < files.length; i++) {
             image1.setRoi(roi);
             image2.setRoi(roi);
 
+            // overall stats
             var stats1 = image1.getStatistics();
             var stats2 = image2.getStatistics();
             var meanIntensity1 = stats1.mean;
             var meanIntensity2 = stats2.mean;
             var std1 = stats1.stdDev;
             var std2 = stats2.stdDev;
-
+            
             // Get mask for ROI
             var mask = roi.getMask();
             var bounds = roi.getBounds();
@@ -130,13 +135,7 @@ for (var i = 0; i < files.length; i++) {
                     if (inRoi) {
                         // Acquire pixels
                         var pixel1 = processor1.getPixel(x, y);
-                        var pixel2 = processor2.getPixel(x, y);
-                        // Calculate difference
-                        diffSum += Math.abs(pixel1 - pixel2);
-                        // Calculate RMSE term
-                        RMSEterm1 += Math.pow(pixel1 - pixel2, 2);
-                        // Calculate term for correlation
-                        corrTerm1 += (pixel1 - meanIntensity1) * (pixel2 - meanIntensity2);
+                        var pixel2 = processor2.getPixel(x, y);                        
                         // Store pixel values for normalization
                         pixels1.push(pixel1);
                         pixels2.push(pixel2);
@@ -146,13 +145,7 @@ for (var i = 0; i < files.length; i++) {
             }
             if (pixelCount === 0) continue;
 
-            // Calculate mean difference, RMSE and Pearson correlation
-            var meanDifference = diffSum / pixelCount;
-            var pearsonCorrelation = corrTerm1 / (std1 * std2 * pixelCount); // pixelCount added because std1 = std1'/sqrt(pixelCount)
-            var RMSE = Math.sqrt(RMSEterm1 / pixelCount);
-
-            /*
-            // Percentile normalization
+            // more stats, ie percentile values
             // Create sorted pixels 
             var DoubleArray = Java.type("double[]");
             var sorted1 = java.util.Arrays.copyOf(Java.to(pixels1, DoubleArray), pixels1.length);
@@ -163,14 +156,55 @@ for (var i = 0; i < files.length; i++) {
             // Function to get percentile value
             function getPercentile(sortedArr, p) {
                 var idx = Math.floor(p * sortedArr.length);
-                return sortedArr[Math.max(0, Math.min(sortedArr.length - 1, idx))];
+                print("idx = " + idx);
+                print(java.util.Arrays.toString(sortedArr));
+                var percentile_val = sortedArr[Math.max(0, Math.min(sortedArr.length - 1, idx))]
+                print("percentile_val = " + percentile_val);
+                return percentile_val;
             }
             
             // Determine percentile values
-            var p05_1 = getPercentile(sorted1, 0.01);
-            var p95_1 = getPercentile(sorted1, 0.99);
-            var p05_2 = getPercentile(sorted2, 0.01);
-            var p95_2 = getPercentile(sorted2, 0.99);
+            var p01_1 = getPercentile(sorted1, 0.01);
+            var p99_1 = getPercentile(sorted1, 0.99);
+            var p01_2 = getPercentile(sorted2, 0.01);
+            var p99_2 = getPercentile(sorted2, 0.99);
+            print("Image: " + file.getName() + " - ROI: " + roiName);
+            print("percentile values are: " + p01_1 + ", " + p99_1 + ", " + p01_2 + ", " + p99_2);
+            
+            // loop over pixels within bounds of ROI (w/ check later for actual shape)
+            for (var y = bounds.y; y < bounds.y + bounds.height; y++) {
+                for (var x = bounds.x; x < bounds.x + bounds.width; x++) {
+                    // Check if pixel is in ROI
+                    var inRoi = mask ? (mask.getPixel(x - bounds.x, y - bounds.y) > 0) : roi.contains(x, y);
+                    // If so, take pixel along for calculations
+                    if (inRoi) {
+                        // Acquire pixels
+                        var pixel1 = processor1.getPixel(x, y);
+                        var pixel2 = processor2.getPixel(x, y);
+                        // Get normalized values of pixels
+                        var pixel1_norm = (pixel1 - p01_1) / (p99_1 - p01_1);
+                        var pixel2_norm = (pixel2 - p01_2) / (p99_2 - p01_2);
+                        //var pixel1_norm = (pixel1) / (p99_1);
+                        //var pixel2_norm = (pixel2) / (p99_2);
+                                                
+                        // Calculate difference
+                        diffSum += Math.abs(pixel1_norm - pixel2_norm);
+                        // Calculate RMSE term
+                        RMSEterm1 += Math.pow(pixel1_norm - pixel2_norm, 2);
+                        // Calculate term for correlation
+                        corrTerm1 += (pixel1 - meanIntensity1) * (pixel2 - meanIntensity2);
+
+                    }
+                }
+            }
+            
+            // Calculate mean difference, RMSE and Pearson correlation
+            var meanDifference = diffSum / pixelCount;
+            var RMSE = Math.sqrt(RMSEterm1 / pixelCount);
+            var pearsonCorrelation = corrTerm1 / (std1 * std2 * pixelCount); // pixelCount added because std1 = std1'/sqrt(pixelCount)
+
+            /*
+            // Percentile normalization
 
             // Normalize pixels in ROI
             for (var y = bounds.y; y < bounds.y + bounds.height; y++) {
