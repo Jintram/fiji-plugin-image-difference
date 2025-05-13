@@ -59,10 +59,10 @@ A lower RMSD indicates higher similarity between the two images.
 We furthermore calculate the mean difference between each pixel as follows:
 
 $$
-\mathrm{Mean\ Difference} = \frac{1}{n} \sum_{i=1}^{n} |x_i - y_i|
+\mathrm{Mean\ Difference} = \frac{1}{n} \sum_{i=1}^{n} |X_i - Y_i|
 $$
 
-where $n$ is the total number of pixels. 
+where $n$ is the total number of pixels, and $X$ and $Y$ again refer to normalized images. 
 
 Again, to be able to compare across different image sets, the normalization is key.
 
