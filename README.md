@@ -5,6 +5,8 @@
 
 For a small research project, we wanted to quantify the similarity between two images quantitatively.
 
+## Theory
+
 ### Relation to co-localization
 
 This is akin to co-localization, but not precisely. For more literature on co-localization, see also:
@@ -49,6 +51,12 @@ $$
 
 where $n$ is the total number of pixels. A lower mean difference indicates higher similarity between the two images.
 
+## Testing 
+
+
+![Test image 1](images/img1__a_test.tif)
+
+![Test set plots](images/plots_testset.png)
 
 
 
