@@ -1,0 +1,55 @@
+
+
+library(ggplot2)
+
+
+# import the data
+df_celldistances = read.csv('/Users/m.wehrens/Data_UVA/2025_05_Isabelle_p2a-localization/DATA/202505_testset-email_Results.csv')
+    # View(df_celldistances)
+
+
+# Sanitize the names
+df_celldistances$Image.Name.New = df_celldistances$Image.Name
+df_celldistances$Image.Name.New = gsub("\\(.*[.]tif", "", df_celldistances$Image.Name.New)
+df_celldistances$Image.Name.New = gsub("^img", "(", df_celldistances$Image.Name.New)
+df_celldistances$Image.Name.New = gsub("__", ") ", df_celldistances$Image.Name.New)
+    # View(df_celldistances)
+
+
+# now plot RMSE
+ggplot(df_celldistances)+
+    geom_boxplot(aes(x= Image.Name.New, y=RMSE), outlier.shape = NA)+
+    geom_jitter(aes(x= Image.Name.New, y=RMSE), alpha=.5)+
+    # rotate text 90 degrees
+    theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+# now plot Correlation
+ggplot(df_celldistances)+
+    geom_boxplot(aes(x= Image.Name.New, y=Pearson.Corr), outlier.shape = NA)+
+    geom_jitter(aes(x= Image.Name.New, y=Pearson.Corr), alpha=.5)+
+    # rotate text 90 degrees
+    theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+# now plot Mean difference
+ggplot(df_celldistances)+
+    geom_boxplot(aes(x= Image.Name.New, y=Mean.Difference), outlier.shape = NA)+
+    geom_jitter(aes(x= Image.Name.New, y=Mean.Difference), alpha=.5)+
+    # rotate text 90 degrees
+    theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+
+
+# Combine all plots with facets
+# First melt the dataframe
+library(tidyverse)
+df_celldistances.melt = df_celldistances %>%
+    # select(Image.Name.New, RMSE, Pearson.Corr, Mean.Difference) %>%
+    pivot_longer(cols = c(RMSE, Pearson.Corr, Mean.Difference), names_to = "Metric", values_to = "Value")
+    # View(df_celldistances.melt)
+
+
+
+
+
+
+
