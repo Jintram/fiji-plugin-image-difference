@@ -1,4 +1,9 @@
+
+
 // This is a script intended as FIJI macro 
+
+// This script was written in conjunction with co-pilot GPT-4.1
+
 
 // Import necessary classes
 importClass(Packages.ij.IJ);
