@@ -81,6 +81,8 @@ This is indeed what is reflected by the metrics (each dot corresponds to an ROI)
 
 ![Test set plots](images/plots_testset.png)
 
+(These plots were made with the script `plotResults.R`)
+
 ## How to use this script
 
 ### Step 1: download plugin
