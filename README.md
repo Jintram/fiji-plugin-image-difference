@@ -63,7 +63,6 @@ $$
 $$
 
 where $n$ is the total number of pixels, and $X$ and $Y$ again refer to normalized images. 
-
 Again, to be able to compare across different image sets, the normalization is key.
 
 A lower mean difference indicates higher similarity between the two images.
