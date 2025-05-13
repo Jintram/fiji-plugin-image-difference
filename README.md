@@ -22,6 +22,6 @@ $$
 r = \frac{\sum_{i=1}^{n} (x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n} (x_i - \bar{x})^2} \sqrt{\sum_{i=1}^{n} (y_i - \bar{y})^2}}
 $$
 
-where \( x_i \) and \( y_i \) are the pixel values of the two images, and \( \bar{x} \), \( \bar{y} \) are their respective means.
+where $\( x_i \)$ and $\( y_i \)$ are the pixel values of the two images, and $\( \bar{x} \)$, $\( \bar{y} \)$ are their respective means.
 
 - 
