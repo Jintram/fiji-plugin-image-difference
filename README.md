@@ -47,7 +47,7 @@ $$
 X_i = \frac{x_i - P_{1\%}(x)}{P_{99\%}(x) - P_{1\%}(x)}
 $$
 
-with \(P_{1\%}(x)\) and \(P_{99\%}(x)\) are the 1st and 99th percentiles of the pixel values in image \(x\), respectively.
+with $P_{1\%}(x)$ and $P_{99\%}(x)$ are the 1st and 99th percentiles of the pixel values in image $x$, respectively.
 
 To be able to compare across different image sets, the normalization is key.
 
