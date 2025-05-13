@@ -17,10 +17,10 @@ df_celldistances$Image.Name.New = gsub("__", ") ", df_celldistances$Image.Name.N
     # View(df_celldistances)
 
 
-# now plot RMSE
+# now plot RMSD
 ggplot(df_celldistances)+
-    geom_boxplot(aes(x= Image.Name.New, y=RMSE), outlier.shape = NA)+
-    geom_jitter(aes(x= Image.Name.New, y=RMSE), alpha=.5)+
+    geom_boxplot(aes(x= Image.Name.New, y=RMSD), outlier.shape = NA)+
+    geom_jitter(aes(x= Image.Name.New, y=RMSD), alpha=.5)+
     # rotate text 90 degrees
     theme(axis.text.x = element_text(angle = 90, hjust = 1))+
     theme_bw()
@@ -47,16 +47,16 @@ ggplot(df_celldistances)+
 # First melt the dataframe
 library(tidyverse)
 df_celldistances.melt = df_celldistances %>%
-    # select(Image.Name.New, RMSE, Pearson.Corr, Mean.Difference) %>%
-    pivot_longer(cols = c(RMSE, Pearson.Corr, Mean.Difference), names_to = "Metric", values_to = "Value")
+    # select(Image.Name.New, RMSD, Pearson.Corr, Mean.Difference) %>%
+    pivot_longer(cols = c(RMSD, Pearson.Corr, Mean.Difference), names_to = "Metric", values_to = "Value")
     # View(df_celldistances.melt)
 # Rename the metrics
 df_celldistances.melt$MetricNew = df_celldistances.melt$Metric
-rename_lookup = c("RMSE" = "RMSE", "Pearson.Corr" = "Corr", "Mean.Difference" = "Diff")
+rename_lookup = c("RMSD" = "RMSD", "Pearson.Corr" = "Corr", "Mean.Difference" = "Diff")
 df_celldistances.melt$MetricNew = rename_lookup[df_celldistances.melt$MetricNew]
 # Set the order of the different metrics
-df_celldistances.melt$Metric.F = factor(df_celldistances.melt$Metric, levels = c("Pearson.Corr", "RMSE", "Mean.Difference"))
-df_celldistances.melt$MetricNew.F = factor(df_celldistances.melt$MetricNew, levels = c("Corr", "RMSE", "Diff"))
+df_celldistances.melt$Metric.F = factor(df_celldistances.melt$Metric, levels = c("Pearson.Corr", "RMSD", "Mean.Difference"))
+df_celldistances.melt$MetricNew.F = factor(df_celldistances.melt$MetricNew, levels = c("Corr", "RMSD", "Diff"))
     # View(df_celldistances.melt)
 
 
@@ -73,8 +73,11 @@ p = ggplot(df_celldistances.melt)+
 print(p) 
 
 # now save this plot
-ggsave("/Users/m.wehrens/Documents/git_repos/_UVA/2025_fiji-plugin-playground/images/plots_testset.png", 
-       plot = p, width = 15, height = 6, dpi = 300, units = "cm", device = "png")
-
-
+if FALSE:
+    # For testset
+    ggsave("/Users/m.wehrens/Documents/git_repos/_UVA/2025_fiji-plugin-playground/images/plots_testset.png", 
+           plot = p, width = 15, height = 6, dpi = 300, units = "cm", device = "png")
+    # For testset
+    ggsave("/Users/m.wehrens/Data_UVA/2025_05_Isabelle_p2a-localization/DATA/plots_testimages.png", 
+           plot = p, width = 15, height = 9, dpi = 300, units = "cm", device = "png")
 

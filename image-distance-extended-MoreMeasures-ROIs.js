@@ -127,7 +127,7 @@ for (var i = 0; i < files.length; i++) {
             var diffSum = 0;
             var corrTerm1 = 0;
             var pixelCount = 0;
-            var RMSEterm1 = 0;
+            var RMSDterm1 = 0;
             var pixels1 = [];
             var pixels2 = [];
 
@@ -161,10 +161,10 @@ for (var i = 0; i < files.length; i++) {
             // Function to get percentile value
             function getPercentile(sortedArr, p) {
                 var idx = Math.floor(p * sortedArr.length);
-                print("idx = " + idx);
-                print(java.util.Arrays.toString(sortedArr));
+                //print("idx = " + idx);
+                // print(java.util.Arrays.toString(sortedArr));
                 var percentile_val = sortedArr[Math.max(0, Math.min(sortedArr.length - 1, idx))]
-                print("percentile_val = " + percentile_val);
+                //print("percentile_val = " + percentile_val);
                 return percentile_val;
             }
             
@@ -194,8 +194,8 @@ for (var i = 0; i < files.length; i++) {
                                                 
                         // Calculate difference
                         diffSum += Math.abs(pixel1_norm - pixel2_norm);
-                        // Calculate RMSE term
-                        RMSEterm1 += Math.pow(pixel1_norm - pixel2_norm, 2);
+                        // Calculate RMSD term
+                        RMSDterm1 += Math.pow(pixel1_norm - pixel2_norm, 2);
                         // Calculate term for correlation
                         corrTerm1 += (pixel1 - meanIntensity1) * (pixel2 - meanIntensity2);
 
@@ -203,9 +203,9 @@ for (var i = 0; i < files.length; i++) {
                 }
             }
             
-            // Calculate mean difference, RMSE and Pearson correlation
+            // Calculate mean difference, RMSD and Pearson correlation
             var meanDifference = diffSum / pixelCount;
-            var RMSE = Math.sqrt(RMSEterm1 / pixelCount);
+            var RMSD = Math.sqrt(RMSDterm1 / pixelCount);
             var pearsonCorrelation = corrTerm1 / (std1 * std2 * pixelCount); // pixelCount added because std1 = std1'/sqrt(pixelCount)
 
             /*
@@ -235,7 +235,7 @@ for (var i = 0; i < files.length; i++) {
             results.addValue("ROI Name", roiName);
             results.addValue("Mean Difference", meanDifference);
             results.addValue("Pearson Corr", pearsonCorrelation);
-            results.addValue("RMSE", RMSE);
+            results.addValue("RMSD", RMSD);
         }
         // Now save the processed images
                             
