@@ -70,7 +70,7 @@ It is thus expected that the distance metrics reflect, respectively
 2. perfect similarity
 3. intermediate similarity
 
-This can also be visualized by scatter plots:
+This can also be visualized by scatter plots between pixels of the first image versus corresponding pixels of the second image for each set:
 
 | Set 1 | Set 2 | Set 3 |
 | ----- | ----- | ----- |
