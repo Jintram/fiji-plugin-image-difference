@@ -36,10 +36,22 @@ A higher Pearson correlation coefficient indicates higher similarity between the
 We also calculate the [RMSD](https://en.wikipedia.org/wiki/Root_mean_square_deviation) as follows:
 
 $$
-\mathrm{RMSD} = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (x_i - y_i)^2}
+\mathrm{RMSD} = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (X_i - Y_i)^2}
 $$
 
-where $n$ is the total number of pixels. (Note that this is related to the [Euclidean distance](https://en.wikipedia.org/wiki/Euclidean_distance) between vectors $\vec{x}$ and $\vec{y}$, but an $1/N$ term was added.) A lower RMSD indicates higher similarity between the two images.
+where $n$ is the total number of pixels. (Note that this is related to the [Euclidean distance](https://en.wikipedia.org/wiki/Euclidean_distance) between vectors $\vec{x}$ and $\vec{y}$, but an $1/N$ term was added.) 
+
+Moreover, $X$ and $Y$ now indicate respectively images $x$ and $y$ that are normalized as follows:
+
+$$
+X_i = \frac{x_i - P_{1\%}(x)}{P_{99\%}(x) - P_{1\%}(x)}
+$$
+
+with \(P_{1\%}(x)\) and \(P_{99\%}(x)\) are the 1st and 99th percentiles of the pixel values in image \(x\), respectively.
+
+To be able to compare across different image sets, the normalization is key.
+
+A lower RMSD indicates higher similarity between the two images.
 
 #### Mean distance
 
@@ -49,7 +61,11 @@ $$
 \mathrm{Mean\ Difference} = \frac{1}{n} \sum_{i=1}^{n} |x_i - y_i|
 $$
 
-where $n$ is the total number of pixels. A lower mean difference indicates higher similarity between the two images.
+where $n$ is the total number of pixels. 
+
+Again, to be able to compare across different image sets, the normalization is key.
+
+A lower mean difference indicates higher similarity between the two images.
 
 ## Testing 
 
