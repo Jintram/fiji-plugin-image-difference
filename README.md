@@ -14,9 +14,11 @@ This is akin to co-localization, but not precisely. For more literature on co-lo
 
 ### Quantifying image similarity
 
+##### Pearson Correlation
+
 We quantify the (dis)similarity between two images using three metrics:
 
-- The correlation coefficient between pixels x_i of image x compared to the pixels y_i of image y.
+The correlation coefficient between pixels x_i of image x compared to the pixels y_i of image y.
 
 $$
 r = \frac{\sum_{i=1}^{n} (x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum_{i=1}^{n} (x_i - \bar{x})^2} \sqrt{\sum_{i=1}^{n} (y_i - \bar{y})^2}}
@@ -24,4 +26,5 @@ $$
 
 where $\( x_i \)$ and $\( y_i \)$ are the pixel values of the two images, and $\( \bar{x} \)$, $\( \bar{y} \)$ are their respective means.
 
-- 
+##### Pearson Correlation
+
