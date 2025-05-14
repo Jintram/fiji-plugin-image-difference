@@ -15,17 +15,17 @@ importClass(Packages.java.io.File);
 // import "matchingFiles"
 
 // Test folders, e.g.:
-var default1 = "/Users/m.wehrens/Data_UVA/2025_05_Isabelle_p2a-localization/DATA/202505_testset-email/image_set_A/"
-var default2 = "/Users/m.wehrens/Data_UVA/2025_05_Isabelle_p2a-localization/DATA/202505_testset-email/image_set_B/"
+//var default1 = "/Users/m.wehrens/Data_UVA/2025_05_Isabelle_p2a-localization/DATA/202505_testset-email/image_set_A/"
+//var default2 = "/Users/m.wehrens/Data_UVA/2025_05_Isabelle_p2a-localization/DATA/202505_testset-email/image_set_B/"
 // 2nd default set (test images):
-var default1 = '/Users/m.wehrens/Documents/git_repos/_UVA/2025_fiji-plugin-playground/test_data/set_a_with_ROIs/'
-var default2 = '/Users/m.wehrens/Documents/git_repos/_UVA/2025_fiji-plugin-playground/test_data/set_b_with_ROIs/'
+//var default1 = '/Users/m.wehrens/Documents/git_repos/_UVA/2025_fiji-plugin-playground/test_data/set_a_with_ROIs/'
+//var default2 = '/Users/m.wehrens/Documents/git_repos/_UVA/2025_fiji-plugin-playground/test_data/set_b_with_ROIs/'
 // 3rd default set (example images):
 var default1 = '/Users/m.wehrens/Documents/git_repos/_UVA/2025_fiji-plugin-playground/example_data/images_A'
 var default2 = '/Users/m.wehrens/Documents/git_repos/_UVA/2025_fiji-plugin-playground/example_data/images_B'
 // 4th default (several bit depths)
-var default1 = '/Users/m.wehrens/Documents/git_repos/_UVA/2025_fiji-plugin-playground/test_data/wrong_type_setA'
-var default2 = '/Users/m.wehrens/Documents/git_repos/_UVA/2025_fiji-plugin-playground/test_data/wrong_type_setB'
+//var default1 = '/Users/m.wehrens/Documents/git_repos/_UVA/2025_fiji-plugin-playground/test_data/wrong_type_setA'
+//var default2 = '/Users/m.wehrens/Documents/git_repos/_UVA/2025_fiji-plugin-playground/test_data/wrong_type_setB'
 
 // Create a dialog box
 var gd = new GenericDialog("Select Folders");
