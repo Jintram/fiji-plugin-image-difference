@@ -27,6 +27,7 @@ var default2 = '/Users/m.wehrens/Documents/git_repos/_UVA/2025_fiji-plugin-playg
 //var default1 = '/Users/m.wehrens/Documents/git_repos/_UVA/2025_fiji-plugin-playground/test_data/wrong_type_setA'
 //var default2 = '/Users/m.wehrens/Documents/git_repos/_UVA/2025_fiji-plugin-playground/test_data/wrong_type_setB'
 
+
 // Create a dialog box
 var gd = new GenericDialog("Select Folders");
 gd.addStringField("Folder 1:", default1, 40);
