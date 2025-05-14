@@ -20,6 +20,12 @@ var default2 = "/Users/m.wehrens/Data_UVA/2025_05_Isabelle_p2a-localization/DATA
 // 2nd default set (test images):
 var default1 = '/Users/m.wehrens/Documents/git_repos/_UVA/2025_fiji-plugin-playground/test_data/set_a_with_ROIs/'
 var default2 = '/Users/m.wehrens/Documents/git_repos/_UVA/2025_fiji-plugin-playground/test_data/set_b_with_ROIs/'
+// 3rd default set (example images):
+var default1 = '/Users/m.wehrens/Documents/git_repos/_UVA/2025_fiji-plugin-playground/example_data/images_A'
+var default2 = '/Users/m.wehrens/Documents/git_repos/_UVA/2025_fiji-plugin-playground/example_data/images_B'
+// 4th default (several bit depths)
+var default1 = '/Users/m.wehrens/Documents/git_repos/_UVA/2025_fiji-plugin-playground/test_data/wrong_type_setA'
+var default2 = '/Users/m.wehrens/Documents/git_repos/_UVA/2025_fiji-plugin-playground/test_data/wrong_type_setB'
 
 // Create a dialog box
 var gd = new GenericDialog("Select Folders");
@@ -87,6 +93,12 @@ for (var i = 0; i < files.length; i++) {
 
         var image1 = IJ.openImage(file.getAbsolutePath());
         var image2 = IJ.openImage(file2.getAbsolutePath());
+        
+        // convert the image to 16 bit
+        // Not sure why this is necessary, but calculation of Pearson goes
+        // wrong if bit depth is higher than 16 bit.
+        IJ.run(image1, "16-bit", "");
+        IJ.run(image2, "16-bit", "");
         
         // Check if images exist and have matching dimensions
         if (!image1 || !image2) {
@@ -198,6 +210,7 @@ for (var i = 0; i < files.length; i++) {
                         RMSDterm1 += Math.pow(pixel1_norm - pixel2_norm, 2);
                         // Calculate term for correlation
                         corrTerm1 += (pixel1 - meanIntensity1) * (pixel2 - meanIntensity2);
+                            // print("(pixel1 - meanIntensity1)=" + (pixel1 - meanIntensity1) + ", (pixel2 - meanIntensity2)=" + (pixel2 - meanIntensity2));
 
                     }
                 }
@@ -206,7 +219,8 @@ for (var i = 0; i < files.length; i++) {
             // Calculate mean difference, RMSD and Pearson correlation
             var meanDifference = diffSum / pixelCount;
             var RMSD = Math.sqrt(RMSDterm1 / pixelCount);
-            var pearsonCorrelation = corrTerm1 / (std1 * std2 * pixelCount); // pixelCount added because std1 = std1'/sqrt(pixelCount)
+            var pearsonCorrelation = corrTerm1 / (std1 * std2 * (pixelCount-1)); // (pixelCount-1) added because std1 = std1'/sqrt(pixelCount-1)
+            print("corrTerm1 = " + corrTerm1 + ", std1=" + std1 + ", std2=" + std2 + ", pixelCount=" + pixelCount);
 
             /*
             // Percentile normalization

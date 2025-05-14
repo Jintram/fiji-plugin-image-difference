@@ -101,6 +101,32 @@ This is indeed what is reflected by the metrics (each dot corresponds to an ROI)
 
 (These plots were made with the script `plotResults.R`)
 
+## A more visual example
+
+The differences in the 'testing' section above are real, but hard to see with the human eye. I therefor created another set of example images, which
+show a bit clearer differences.
+
+![example output](images/example_set_overview.png)
+
+Here,
+
+- Set 1 shows 2 cells which show 2 very different patterns from image A to B.
+- Set 2 shows 2 cells that show exactly the same pattern in image A and B.
+- Set 3 shows 2 cells that show a very similar but different pattern in image A and B.
+
+The scatter plots look as follows:
+
+| Set 1 | Set 2 | Set 3 |
+| ----- | ----- | ----- |
+| Dissimilar | Same| Slight changes |
+| <img src="images/smallimg1a_smallimg1b.png" width="200" /> | <img src="images/smallimg2a_smallimg2b.png" width="200" /> | <img src="images/smallimg3a_smallimg3b.png" width="200" /> | 
+
+(Technical note: to emphasize visual differences in the images, the pixels were assigned one of only 16 values, which is why the plots look so discrete.)
+
+And this leads to the following result:
+
+![example result](images/plots_exampleimages_nicelabel.png)
+
 ## How to use this script
 
 ### Step 1: download plugin
