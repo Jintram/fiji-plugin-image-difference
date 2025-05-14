@@ -97,7 +97,7 @@ This can also be visualized by scatter plots between pixels of the first image v
 
 This is indeed what is reflected by the metrics (each dot corresponds to an ROI):
 
-![Test set plots](images/plots_testset.png)
+<img src="images/plots_testset.png" width="400" alt="Test set plots" />
 
 (These plots were made with the script `plotResults.R`)
 
@@ -106,7 +106,7 @@ This is indeed what is reflected by the metrics (each dot corresponds to an ROI)
 The differences in the 'testing' section above are real, but hard to see with the human eye. I therefor created another set of example images, which
 show a bit clearer differences.
 
-![example output](images/example_set_overview.png)
+<img src="images/example_set_overview.png" width="500" alt="example output" />
 
 Here,
 
@@ -125,7 +125,7 @@ The scatter plots look as follows:
 
 And this leads to the following result:
 
-![example result](images/plots_exampleimages_nicelabel.png)
+<img src="images/plots_exampleimages_nicelabel.png" width="400" alt="example result" />
 
 ## How to use this script
 
