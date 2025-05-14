@@ -127,6 +127,12 @@ And this leads to the following result:
 
 <img src="images/plots_exampleimages_nicelabel.png" width="400" alt="example result" />
 
+Indeed, for **set 1** as the images are completely different, the Pearson correlation is low and the RMSD and mean difference are high (reflecting large changes from one pixel to the next).
+
+For **set 2**, the fact that the pixels in image A and B are exactly the same is reflected by the fact that there is a correlation of exactly $1$ and the pixel-to-pixel differences between the two images as reflected by RSMD and mean difference are exactly $0$. 
+
+For **set 3**, there are small differences, as reflected by the RSMD and mean pixel-to-pixel difference, and the correlation is a bit lower than 1 (but still very high, given the high degree of similarity in these very crude example pictures).
+
 ## How to use this script
 
 ### Step 1: download plugin
