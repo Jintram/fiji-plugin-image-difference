@@ -187,6 +187,22 @@ Also, it doesn't display clearly that it is running. When it is done, it will sh
 
 Perhaps it is best to first test the script on a limited amount of images, such that you are sure it works before applying it to a large set of images.
 
+### A final technical note
+
+All metrics are independent of the size of the ROIs. This is known for the Pearson correlation. For the others, this can be easily seen from the fact that $|X_i - Y_i|$ has some expected value $E_1$, and also $(X_i - Y_i)^2$ has some expected value $E_2$, such that 
+
+$$
+\mathrm{Mean\ Difference} = \frac{1}{n} \sum_{i=1}^{n} |X_i - Y_i| = 
+\frac{1}{n} \sum_{i=1}^{n} E_1 = \frac{1}{n} \cdot n E_1 = E_1
+$$
+
+$$
+\mathrm{RMSD} = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (X_i - Y_i)^2} = 
+\sqrt{\frac{1}{n} \sum_{i=1}^{n} E_2} =
+\sqrt{\frac{1}{n} \cdot n E_2} = 
+\sqrt{ E_2}
+$$
+
 ### Contact
 
 Contact me for further questions: m.wehrens@uva.nl.
