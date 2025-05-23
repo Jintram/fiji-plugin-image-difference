@@ -199,17 +199,17 @@ E_2 &= (X_i - Y_i)^2
 $$
 
 $$
-\begin{align*}
-\mathrm{RMSD} &= \sqrt{\frac{1}{n} \sum_{i=1}^{n} (X_i - Y_i)^2} = 
+\mathrm{RMSD} = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (X_i - Y_i)^2} = 
 \sqrt{\frac{1}{n} \sum_{i=1}^{n} E_1} =
 \sqrt{\frac{1}{n} \cdot n E_1} = 
-\sqrt{ E_1}\\
+\sqrt{ E_1}
+$$
 
-\mathrm{Mean\ Difference} &= \frac{1}{n} \sum_{i=1}^{n} |X_i - Y_i| = 
+$$
+\mathrm{Mean\ Difference} = \frac{1}{n} \sum_{i=1}^{n} |X_i - Y_i| = 
 \frac{1}{n} \sum_{i=1}^{n} E_2 = 
 \frac{1}{n} \cdot n E_2 = 
 E_2
-\end{align*}
 $$
 
 
