@@ -189,28 +189,30 @@ Perhaps it is best to first test the script on a limited amount of images, such 
 
 ### A final technical note
 
-All metrics are independent of the size of the ROIs. This is known for the Pearson correlation. For the others, this can be easily seen from the fact that $(X_i - Y_i)^2$ has some expected value $E_1$, and also $|X_i - Y_i|$ has some expected value $E_2$, such that 
+All metrics are independent of the size of the ROIs. 
+This is known for the Pearson correlation. 
+For the others, this can be easily seen from the fact that 
+$\frac{1}{n} \sum_{i=1}^{n} Z$ calculates the expected value of $E(Z)$, of $Z$.
+In this case, 
 
 $$
 \begin{align*}
-E_1 &= |X_i - Y_i| \\
-E_2 &= (X_i - Y_i)^2
+Z_1 &= (X_i - Y_i)^2 \\
+Z_2 &= |X_i - Y_i| 
 \end{align*}
 $$
 
 $$
 \mathrm{RMSD} = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (X_i - Y_i)^2} = 
-\sqrt{\frac{1}{n} \sum_{i=1}^{n} E_1} =
-\sqrt{\frac{1}{n} \cdot n E_1} = 
-\sqrt{ E_1}
+\sqrt{ E((X_i - Y_i)^2) }
 $$
 
 $$
 \mathrm{Mean\ Difference} = \frac{1}{n} \sum_{i=1}^{n} |X_i - Y_i| = 
-\frac{1}{n} \sum_{i=1}^{n} E_2 = 
-\frac{1}{n} \cdot n E_2 = 
-E_2
+E( |X_i - Y_i| )
 $$
+
+Neither of these scale with $n$.
 
 
 
