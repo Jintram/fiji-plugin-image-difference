@@ -192,7 +192,7 @@ Perhaps it is best to first test the script on a limited amount of images, such 
 All metrics are independent of the size of the ROIs. 
 This is known for the Pearson correlation. 
 For the others, this can be easily seen from the fact that 
-$\frac{1}{n} \sum_{i=1}^{n} Z$ calculates the expected value of $E(Z)$, of $Z$.
+$\frac{1}{n} \sum_{i=1}^{n} \left( Z \right) $ calculates the expected value $E(Z)$, of $Z$.
 In this case, 
 
 $$
